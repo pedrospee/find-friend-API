@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "lib": ["ES2022"],
     "outDir": "build",
-    "rootDir": "src",
+    "rootDir": ".",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["${configDir}/src/*"],
+      "@/prisma-client": ["${configDir}/node_modules/.prisma/client"]
     }
   },
+  "include": [
+    "src/**/*",
+    "prisma.config.ts"
+  ]
 }
