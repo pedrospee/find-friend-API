@@ -1,0 +1,14 @@
+services:
+  findafriend-pg:
+    image: bitnami/postgresql:16
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=findafriend
+    volumes:
+      - findafriend-pg-data:/bitnami/postgresql
+
+volumes:
+  findafriend-pg-data:
