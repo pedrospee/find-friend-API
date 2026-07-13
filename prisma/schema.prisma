@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Org {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  whatsapp     String
+  address      String
+  city         String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("orgs")
+}
