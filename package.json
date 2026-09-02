@@ -4,6 +4,7 @@
   "description": "API REST para o FindAFriend, plataforma de adoção de pets que conecta ONGs a possíveis adotantes.",
   "license": "MIT",
   "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsup src --out-dir build",
