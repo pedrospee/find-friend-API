@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@/*": ["${configDir}/src/*"],
-      "@/prisma-client": ["${configDir}/node_modules/.prisma/client"]
+      "@/prisma-client": ["${configDir}/node_modules/.prisma/client/client.ts"]
     }
   },
   "include": [
