@@ -1,4 +1,4 @@
-import { hash } from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 
 import type { Org } from '@/prisma-client'
 import type { OrgsRepository } from '@/repositories/orgs-repository.js'
@@ -35,7 +35,7 @@ export class RegisterOrgUseCase {
       throw new OrgAlreadyExistsError()
     }
 
-    const passwordHash = await hash(password, 6)
+    const passwordHash = await bcryptjs.hash(password, 6)
 
     const org = await this.orgsRepository.create({
       name,

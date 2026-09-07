@@ -1,4 +1,4 @@
-import { compare } from 'bcryptjs'
+import bcryptjs from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-repository.js'
@@ -38,7 +38,7 @@ describe('Register Org Use Case', () => {
       city: 'São Paulo',
     })
 
-    const isPasswordCorrectlyHashed = await compare(
+    const isPasswordCorrectlyHashed = await bcryptjs.compare(
       '123456',
       org.passwordHash,
     )
