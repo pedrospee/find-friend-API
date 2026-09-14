@@ -17,5 +17,19 @@ model Org {
   city         String
   createdAt    DateTime @default(now()) @map("created_at")
 
+  pets Pet[]
+
   @@map("orgs")
+}
+
+model Pet {
+  id        String   @id @default(uuid())
+  name      String
+  about     String
+  orgId     String   @map("org_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  org Org @relation(fields: [orgId], references: [id])
+
+  @@map("pets")
 }
