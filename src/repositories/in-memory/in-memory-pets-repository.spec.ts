@@ -8,6 +8,7 @@ test('creates a pet and finds it by id', async () => {
   const createdPet = await petsRepository.create({
     name: 'Rex',
     about: 'Cão dócil e brincalhão, adora crianças.',
+    city: 'São Paulo',
     orgId: 'org-01',
   })
 

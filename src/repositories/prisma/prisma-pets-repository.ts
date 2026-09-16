@@ -13,6 +13,14 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
+  async findManyByCity(city: string): Promise<Pet[]> {
+    const pets = await prisma.pet.findMany({
+      where: { city },
+    })
+
+    return pets
+  }
+
   async create(data: Prisma.PetUncheckedCreateInput): Promise<Pet> {
     const pet = await prisma.pet.create({
       data,

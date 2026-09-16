@@ -26,6 +26,7 @@ model Pet {
   id        String   @id @default(uuid())
   name      String
   about     String
+  city      String
   orgId     String   @map("org_id")
   createdAt DateTime @default(now()) @map("created_at")
 

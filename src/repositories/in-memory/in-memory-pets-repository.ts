@@ -13,11 +13,16 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet ?? null
   }
 
+  async findManyByCity(city: string) {
+    return this.items.filter((item) => item.city === city)
+  }
+
   async create(data: Prisma.PetUncheckedCreateInput) {
     const pet: Pet = {
       id: randomUUID(),
       name: data.name,
       about: data.about,
+      city: data.city,
       orgId: data.orgId,
       createdAt: new Date(),
     }
