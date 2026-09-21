@@ -9,6 +9,9 @@ test('creates a pet and finds it by id', async () => {
     name: 'Rex',
     about: 'Cão dócil e brincalhão, adora crianças.',
     city: 'São Paulo',
+    age: 'ADULTO',
+    size: 'MEDIO',
+    energyLevel: 'ALTA',
     orgId: 'org-01',
   })
 

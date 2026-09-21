@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 
 import type { Pet, Prisma } from '@/prisma-client'
 
-import type { PetsRepository } from '../pets-repository.js'
+import type { PetsFilters, PetsRepository } from '../pets-repository.js'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
@@ -13,8 +13,26 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet ?? null
   }
 
-  async findManyByCity(city: string) {
-    return this.items.filter((item) => item.city === city)
+  async findManyByCity(city: string, filters: PetsFilters = {}) {
+    return this.items.filter((item) => {
+      if (item.city !== city) {
+        return false
+      }
+
+      if (filters.age && item.age !== filters.age) {
+        return false
+      }
+
+      if (filters.size && item.size !== filters.size) {
+        return false
+      }
+
+      if (filters.energyLevel && item.energyLevel !== filters.energyLevel) {
+        return false
+      }
+
+      return true
+    })
   }
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -23,6 +41,9 @@ export class InMemoryPetsRepository implements PetsRepository {
       name: data.name,
       about: data.about,
       city: data.city,
+      age: data.age,
+      size: data.size,
+      energyLevel: data.energyLevel,
       orgId: data.orgId,
       createdAt: new Date(),
     }

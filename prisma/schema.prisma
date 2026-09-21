@@ -23,14 +23,35 @@ model Org {
 }
 
 model Pet {
-  id        String   @id @default(uuid())
-  name      String
-  about     String
-  city      String
-  orgId     String   @map("org_id")
-  createdAt DateTime @default(now()) @map("created_at")
+  id          String         @id @default(uuid())
+  name        String
+  about       String
+  city        String
+  age         PetAge
+  size        PetSize
+  energyLevel PetEnergyLevel @map("energy_level")
+  orgId       String         @map("org_id")
+  createdAt   DateTime       @default(now()) @map("created_at")
 
   org Org @relation(fields: [orgId], references: [id])
 
   @@map("pets")
+}
+
+enum PetAge {
+  FILHOTE
+  ADULTO
+  IDOSO
+}
+
+enum PetSize {
+  PEQUENO
+  MEDIO
+  GRANDE
+}
+
+enum PetEnergyLevel {
+  BAIXA
+  MEDIA
+  ALTA
 }

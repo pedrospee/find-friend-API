@@ -2,7 +2,7 @@ import type { Pet, Prisma } from '@/prisma-client'
 
 import { prisma } from '@/lib/prisma.js'
 
-import type { PetsRepository } from '../pets-repository.js'
+import type { PetsFilters, PetsRepository } from '../pets-repository.js'
 
 export class PrismaPetsRepository implements PetsRepository {
   async findById(id: string): Promise<Pet | null> {
@@ -13,9 +13,12 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyByCity(city: string): Promise<Pet[]> {
+  async findManyByCity(
+    city: string,
+    filters: PetsFilters = {},
+  ): Promise<Pet[]> {
     const pets = await prisma.pet.findMany({
-      where: { city },
+      where: { city, ...filters },
     })
 
     return pets

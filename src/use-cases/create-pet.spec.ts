@@ -30,6 +30,9 @@ describe('Create Pet Use Case', () => {
     const { pet } = await sut.execute({
       name: 'Rex',
       about: 'Cão dócil e brincalhão, adora crianças.',
+      age: 'ADULTO',
+      size: 'MEDIO',
+      energyLevel: 'ALTA',
       orgId: org.id,
     })
 
@@ -49,6 +52,9 @@ describe('Create Pet Use Case', () => {
     const { pet } = await sut.execute({
       name: 'Rex',
       about: 'Cão dócil e brincalhão, adora crianças.',
+      age: 'ADULTO',
+      size: 'MEDIO',
+      energyLevel: 'ALTA',
       orgId: org.id,
     })
 
@@ -60,6 +66,9 @@ describe('Create Pet Use Case', () => {
       sut.execute({
         name: 'Rex',
         about: 'Cão dócil e brincalhão, adora crianças.',
+        age: 'ADULTO',
+        size: 'MEDIO',
+        energyLevel: 'ALTA',
         orgId: 'non-existing-org-id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)

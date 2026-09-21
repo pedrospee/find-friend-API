@@ -18,6 +18,9 @@ describe('Fetch Pets By City Use Case', () => {
       name: 'Rex',
       about: 'Cão dócil e brincalhão, adora crianças.',
       city: 'São Paulo',
+      age: 'ADULTO',
+      size: 'MEDIO',
+      energyLevel: 'ALTA',
       orgId: 'org-01',
     })
 
@@ -25,6 +28,9 @@ describe('Fetch Pets By City Use Case', () => {
       name: 'Thor',
       about: 'Gato independente, mas carinhoso.',
       city: 'Rio de Janeiro',
+      age: 'ADULTO',
+      size: 'PEQUENO',
+      energyLevel: 'BAIXA',
       orgId: 'org-02',
     })
 
@@ -36,6 +42,49 @@ describe('Fetch Pets By City Use Case', () => {
 
   it('should return an empty list when there are no pets in the given city', async () => {
     const { pets } = await sut.execute({ city: 'Curitiba' })
+
+    expect(pets).toHaveLength(0)
+  })
+
+  it('should be able to filter pets by characteristics within a city', async () => {
+    await petsRepository.create({
+      name: 'Rex',
+      about: 'Cão dócil e brincalhão, adora crianças.',
+      city: 'São Paulo',
+      age: 'ADULTO',
+      size: 'MEDIO',
+      energyLevel: 'ALTA',
+      orgId: 'org-01',
+    })
+
+    await petsRepository.create({
+      name: 'Mia',
+      about: 'Gata tranquila, ideal para apartamento.',
+      city: 'São Paulo',
+      age: 'FILHOTE',
+      size: 'PEQUENO',
+      energyLevel: 'BAIXA',
+      orgId: 'org-01',
+    })
+
+    const { pets } = await sut.execute({ city: 'São Paulo', size: 'PEQUENO' })
+
+    expect(pets).toHaveLength(1)
+    expect(pets[0].name).toEqual('Mia')
+  })
+
+  it('should return an empty list when no pet matches the given characteristics', async () => {
+    await petsRepository.create({
+      name: 'Rex',
+      about: 'Cão dócil e brincalhão, adora crianças.',
+      city: 'São Paulo',
+      age: 'ADULTO',
+      size: 'MEDIO',
+      energyLevel: 'ALTA',
+      orgId: 'org-01',
+    })
+
+    const { pets } = await sut.execute({ city: 'São Paulo', age: 'IDOSO' })
 
     expect(pets).toHaveLength(0)
   })

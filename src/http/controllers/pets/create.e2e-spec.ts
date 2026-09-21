@@ -42,6 +42,9 @@ describe('Create Pet (e2e)', () => {
       .send({
         name: 'Rex',
         about: 'Cão dócil e brincalhão, adora crianças.',
+        age: 'ADULTO',
+        size: 'MEDIO',
+        energyLevel: 'ALTA',
       })
 
     expect(response.statusCode).toEqual(201)
