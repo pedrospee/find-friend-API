@@ -57,6 +57,7 @@ describe('Get Pet Details (e2e)', () => {
 
     expect(response.statusCode).toEqual(200)
     expect(response.body.pet.name).toEqual('Rex')
+    expect(response.body.orgWhatsapp).toEqual('11999999999')
   })
 
   it('should return 404 when the pet does not exist', async () => {

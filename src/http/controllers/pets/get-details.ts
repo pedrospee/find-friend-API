@@ -17,9 +17,11 @@ export async function getDetails(
 
     const getPetDetailsUseCase = makeGetPetDetailsUseCase()
 
-    const { pet } = await getPetDetailsUseCase.execute({ petId: id })
+    const { pet, orgWhatsapp } = await getPetDetailsUseCase.execute({
+      petId: id,
+    })
 
-    return reply.status(200).send({ pet })
+    return reply.status(200).send({ pet, orgWhatsapp })
   } catch (error) {
     if (error instanceof ZodError) {
       return reply
