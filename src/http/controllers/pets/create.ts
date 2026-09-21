@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z, ZodError } from 'zod'
 
 import { PetAge, PetEnergyLevel, PetSize } from '@/prisma-client'
+import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error.js'
 import { makeCreatePetUseCase } from '@/use-cases/factories/make-create-pet-use-case.js'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
@@ -35,6 +36,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       return reply
         .status(400)
         .send({ message: 'Validation error.', issues: error.format() })
+    }
+
+    if (error instanceof ResourceNotFoundError) {
+      return reply.status(404).send({ message: error.message })
     }
 
     throw error

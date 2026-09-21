@@ -8,6 +8,7 @@ import { prisma } from '@/lib/prisma.js'
 
 describe('Create Pet (e2e)', () => {
   const email = `e2e-create-pet-${randomUUID()}@petcenter.com`
+  const deletedOrgEmail = `e2e-create-pet-deleted-org-${randomUUID()}@petcenter.com`
 
   beforeAll(async () => {
     await app.ready()
@@ -57,5 +58,38 @@ describe('Create Pet (e2e)', () => {
     })
 
     expect(response.statusCode).toEqual(401)
+  })
+
+  it('should return 404 when the org from the token no longer exists', async () => {
+    await request(app.server).post('/orgs').send({
+      name: 'Pet Center',
+      email: deletedOrgEmail,
+      password: '123456',
+      whatsapp: '11999999999',
+      address: 'Rua das Flores, 123',
+      city: 'São Paulo',
+    })
+
+    const authResponse = await request(app.server).post('/sessions').send({
+      email: deletedOrgEmail,
+      password: '123456',
+    })
+
+    const { token } = authResponse.body
+
+    await prisma.org.deleteMany({ where: { email: deletedOrgEmail } })
+
+    const response = await request(app.server)
+      .post('/pets')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'Rex',
+        about: 'Cão dócil e brincalhão, adora crianças.',
+        age: 'ADULTO',
+        size: 'MEDIO',
+        energyLevel: 'ALTA',
+      })
+
+    expect(response.statusCode).toEqual(404)
   })
 })
